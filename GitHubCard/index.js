@@ -1,7 +1,30 @@
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
+        
 */
+
+axios
+  .get('https://api.github.com/users/dsh410')
+  .then(response =>{
+    
+        const newFollower = followerComponent(response.data)
+        cardsDiv.append(newFollower)
+      console.log('response' ,response)
+})
+  .catch(err=>{
+      console.log('this is a error',err)
+})
+
+axios
+  .get("https://api.github.com/users/dsh410/followers")
+  .then(response =>{
+    const newFollowing = followerComponent(response.data)
+    cardsDiv.append(newFollowing);
+    console.log('followers axios',response);
+})      
+const cardsDiv = document.querySelector('.cards');
+    
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -45,6 +68,58 @@ const followersArray = [];
 </div>
 
 */
+
+const followerComponent = (obj)=>{
+  const card = document.createElement('div');
+  const urlImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const userName = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p')
+  const address = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.append(urlImg);
+  card.append(cardInfo);
+  cardInfo.append(name);
+  cardInfo.append(userName);
+  cardInfo.append(location);
+  cardInfo.append(profile);
+  profile.append(address);
+  cardInfo.append(followers);
+  cardInfo.append(following);
+  cardInfo.append(bio);
+
+
+  card.classList.add('card');
+  urlImg.classList.add('img');
+  cardInfo.classList.add('card','cards');
+  name.classList.add('name');
+  userName.classList.add('username');
+  location.classList.add('p');
+  profile .classList.add('p');
+  followers.classList.add('p');
+  following.classList.add('p');
+  bio.classList.add('p');
+
+  urlImg.src = obj.avatar_url;
+  name.textContent=obj.name;
+  userName.textContent=obj.login;
+  location.textContent=obj.location;
+  profile.textContent=obj.profile;
+  address.textContent=obj.address;
+  followers.textContent=obj.followers;
+  following .textContent=obj.following;
+  bio .textContent=obj.bio;
+
+  return card;
+
+}
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
