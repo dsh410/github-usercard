@@ -9,20 +9,27 @@ axios
   .then(response =>{
     
         const newFollower = followerComponent(response.data)
+        console.log(newFollower);
         cardsDiv.append(newFollower)
       console.log('response' ,response)
+    
 })
   .catch(err=>{
       console.log('this is a error',err)
 })
 
-axios
-  .get("https://api.github.com/users/dsh410/followers")
-  .then(response =>{
-    const newFollowing = followerComponent(response.data)
-    cardsDiv.append(newFollowing);
-    console.log('followers axios',response);
-})      
+// axios
+//   .get("https://api.github.com/users/dsh410/followers")
+//   .then(response =>{
+//     // const newFollowing = followerComponent(response.data)
+//     response.data.forEach(user => {
+//         let newFollowing = followerComponent(user);
+//         cardsDiv.appendChild(newFollowing)
+//     })
+//     // cardsDiv.append(newFollowing);
+//     console.log('followers axios',response);
+//     console.log(newFollowing);
+// })      
 const cardsDiv = document.querySelector('.cards');
     
 
@@ -47,8 +54,23 @@ const cardsDiv = document.querySelector('.cards');
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "schoell411",
+  "thomasutsey",
+  "Joshua-Edgerton",
+  "briworkman",
+  "jregner20"
+];
 
+followersArray.forEach(follower =>{
+  axios
+    .get(`https://api.github.com/users/${follower}`)
+    .then(response => {
+      console.log(response);
+      let followersList = followerComponent(response.data) 
+      cardsDiv.appendChild(followersList);
+    })
+})
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
